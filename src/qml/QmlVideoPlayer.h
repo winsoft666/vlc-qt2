@@ -24,7 +24,7 @@
 #include "QmlVideoObject.h"
 #include "SharedExportQml.h"
 
-#include <VLCQtCore/TrackModel.h>
+#include <core/TrackModel.h>
 
 class VlcAudio;
 class VlcInstance;

@@ -24,7 +24,7 @@
 #include <QQuickItem>
 #include <QPointer>
 
-#include <VLCQtCore/Enums.h>
+#include "core/Enums.h"
 
 #include "SharedExportQml.h"
 

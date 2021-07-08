@@ -26,9 +26,9 @@
 #include <QtCore/QMutex>
 #include <QtQuick/QQuickPaintedItem>
 
-#include <VLCQtCore/Enums.h>
-#include <VLCQtCore/VideoFrame.h>
-#include <VLCQtCore/VideoMemoryStream.h>
+#include <core/Enums.h>
+#include <core/VideoFrame.h>
+#include <core/VideoMemoryStream.h>
 
 #include "SharedExportQml.h"
 

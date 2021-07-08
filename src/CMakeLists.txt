@@ -22,7 +22,6 @@ CONFIGURE_FILE(
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
 
-
 ###########
 # Modules #
 ###########
@@ -34,5 +33,5 @@ ENDIF()
 
 IF(QT_VERSION MATCHES 5)
     ADD_SUBDIRECTORY(qml)
-    ADD_SUBDIRECTORY(plugins/${VLCQT_PLUGIN_QML_NAME})
+    ADD_SUBDIRECTORY(plugins/VLCQt)
 ENDIF()
