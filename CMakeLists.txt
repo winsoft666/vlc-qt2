@@ -25,7 +25,7 @@ SET(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH}
 )
 
-mark_as_advanced(BUILD_TESTING)
+option(BUILD_TESTING "Build tests project" ON)
 
 INCLUDE(config.cmake)
 
