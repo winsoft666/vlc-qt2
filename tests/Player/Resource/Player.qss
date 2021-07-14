@@ -117,40 +117,43 @@
   border-radius: 10px;
 }
 
+
 #vlcWidgetVolSlider::add-page:horizontal {
-	background: #CCCCCC;
+	background-color: #CCCCCC;
 	border: none;
-	border-radius: 2px;
-	height: 4px;
-	margin: 8px 0px 8px 0px;
+	border-radius: 0px;
+	height: 2px;
+	margin: 12px 0px 12px 0px;
 }
 
 #vlcWidgetVolSlider::sub-page:horizontal {
 	background: #FF3636;
 	border: none;
-	border-radius: 2px;
-	height: 4px;
-	margin: 8px 0px 8px 0px;
+	border-radius: 0px;
+	height: 2px;
+	margin: 12px 0px 12px 0px;
 }
 
 #vlcWidgetVolSlider::groove:horizontal {
 	border: none;
-	border-radius: 2px;
-	height: 4px;
-	margin: 8px 0;
-	background-color: #CCCCCC;
+  background-color: #CCCCCC;
+	border-radius: 0px;
+	height: 2px;
+	margin: 12px 0;
 }
 
 #vlcWidgetVolSlider::handle:horizontal {
 	border: none;
-	width: 24px;
-	margin: -8px 0;
-	image: url(:/svg/Resource/slider_handle_n.svg);
+	width: 8px;
+  background-color: #CCCCCC;
+  margin: -6px 0px -6px 0px;
+  border-radius: 0px;
 }
 
 #vlcWidgetVolSlider::handle:horizontal:hover {
 	border: none;
-	width: 24px;
-	margin: -8px 0;
-	image: url(:/svg/Resource/slider_handle_h.svg);
+	width: 8px;
+  background-color: #FF3636;
+  margin: -6px 0px -6px 0px;
+  border-radius: 0px;
 }

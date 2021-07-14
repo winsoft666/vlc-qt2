@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/svg">
+        <file>Resource/pause.svg</file>
+        <file>Resource/play.svg</file>
+        <file>Resource/stop.svg</file>
+        <file>Resource/logo.svg</file>
+        <file>Resource/add.svg</file>
+        <file>Resource/sub.svg</file>
+        <file>Resource/clear.svg</file>
+        <file>Resource/combox_down.svg</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file>Resource/Player.qss</file>
+    </qresource>
+</RCC>
