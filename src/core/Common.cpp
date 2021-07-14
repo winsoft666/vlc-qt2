@@ -24,7 +24,7 @@ QStringList VlcCommon::args()
 
     QString args = qgetenv("VLC_ARGS");
     if (!args.isEmpty())
-        args_list << args.split(" ", QString::SkipEmptyParts);
+        args_list << args.split(" ", Qt::SkipEmptyParts);
     else {
         args_list << "--intf=dummy"
                   << "--no-media-library"

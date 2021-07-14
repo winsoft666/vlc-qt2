@@ -29,22 +29,26 @@
 VlcMedia::VlcMedia(const QString &location,
                    bool localFile,
                    VlcInstance *instance)
-    : QObject(instance)
+    : QObject(instance), _vlcMedia(nullptr), _vlcEvents(nullptr)
 {
     initMedia(location, localFile, instance);
 }
 
 VlcMedia::VlcMedia(const QString &location,
                    VlcInstance *instance)
-    : QObject(instance)
+    : QObject(instance), _vlcMedia(nullptr), _vlcEvents(nullptr)
 {
     initMedia(location, false, instance);
 }
 
-VlcMedia::VlcMedia(libvlc_media_t *media)
+VlcMedia::VlcMedia(libvlc_media_t *media) : QObject(nullptr), _vlcMedia(nullptr), _vlcEvents(nullptr)
 {
     // Create a new libvlc media descriptor from existing one
     _vlcMedia = libvlc_media_duplicate(media);
+
+    char *mrl = libvlc_media_get_mrl(_vlcMedia);
+    if (mrl)
+        _currentMRL = QString::fromUtf8(mrl);
 
     VlcError::showErrmsg();
 }
@@ -78,6 +82,10 @@ void VlcMedia::initMedia(const QString &location,
     else
         _vlcMedia = libvlc_media_new_location(instance->core(), l.toUtf8().data());
 
+    char *mrl = libvlc_media_get_mrl(_vlcMedia);
+    if (mrl)
+        _currentMRL = QString::fromUtf8(mrl);
+
     _vlcEvents = libvlc_media_event_manager(_vlcMedia);
 
     createCoreConnections();
@@ -87,6 +95,8 @@ void VlcMedia::initMedia(const QString &location,
 
 void VlcMedia::createCoreConnections()
 {
+    if (!_vlcEvents)
+        return;
     QList<libvlc_event_e> list;
     list << libvlc_MediaMetaChanged
          << libvlc_MediaSubItemAdded
@@ -102,6 +112,8 @@ void VlcMedia::createCoreConnections()
 
 void VlcMedia::removeCoreConnections()
 {
+    if (!_vlcEvents)
+        return;
     QList<libvlc_event_e> list;
     list << libvlc_MediaMetaChanged
          << libvlc_MediaSubItemAdded
@@ -134,6 +146,11 @@ void VlcMedia::parse()
 QString VlcMedia::currentLocation() const
 {
     return _currentLocation;
+}
+
+QString VlcMedia::currentMRL() const
+{
+    return _currentMRL;
 }
 
 VlcStats *VlcMedia::getStats()

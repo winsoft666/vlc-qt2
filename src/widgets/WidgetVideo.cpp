@@ -56,7 +56,7 @@ VlcWidgetVideo::VlcWidgetVideo(VlcMediaPlayer *player,
 
 VlcWidgetVideo::VlcWidgetVideo(QWidget *parent)
     : QFrame(parent),
-      _vlcMediaPlayer(0)
+      _vlcMediaPlayer(Q_NULLPTR)
 {
     initWidgetVideo();
 }
@@ -80,7 +80,7 @@ void VlcWidgetVideo::initWidgetVideo()
 
     _layout = new QHBoxLayout(this);
     _layout->setContentsMargins(0, 0, 0, 0);
-    _video = 0;
+    _video = Q_NULLPTR;
 
     QPalette plt = palette();
     plt.setColor(QPalette::Window, Qt::black);

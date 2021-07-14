@@ -41,20 +41,13 @@ SET(VLCQT_WIDGETS_SRCS
     ControlVideo.cpp
     SharedExportWidgets.h
     WidgetSeek.cpp
-    WidgetSeekProgress.cpp
     WidgetVideo.cpp
     WidgetVolumeSlider.cpp
 )
 
 # Define the Include files
-SET(VLCQT_WIDGETS_HEADERS
-    ControlAudio.h
-    ControlVideo.h
-    SharedExportWidgets.h
-    WidgetSeek.h
-    WidgetSeekProgress.h
-    WidgetVideo.h
-    WidgetVolumeSlider.h
+file(GLOB_RECURSE VLCQT_WIDGETS_HEADERS
+  "*.h"
 )
 
 
@@ -113,10 +106,10 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND WITH_X11)
 ENDIF()
 
 
-# Provide valid includes for other modules
-IF(MINGW OR MSVC)
-    FILE(COPY ${VLCQT_WIDGETS_HEADERS} DESTINATION "${VLCQT_SDK_INC_OUT}/widgets")
-ENDIF()
+ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${VLCQT_SDK_INC_OUT}/widgets
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${VLCQT_WIDGETS_HEADERS} ${VLCQT_SDK_INC_OUT}/widgets
+)
 
 ################
 # Installation #

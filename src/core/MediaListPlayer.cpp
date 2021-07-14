@@ -25,10 +25,12 @@
 #include "core/MediaList.h"
 #include "core/MediaListPlayer.h"
 #include "core/MediaPlayer.h"
+#include "core/VideoDelegate.h"
 
 VlcMediaListPlayer::VlcMediaListPlayer(VlcInstance *instance)
     : QObject(instance),
-      _list(0),
+      _list(Q_NULLPTR),
+      _player(Q_NULLPTR),
       _mode(Vlc::DefaultPlayback)
 {
     _player = new VlcMediaPlayer(instance);
@@ -45,7 +47,8 @@ VlcMediaListPlayer::VlcMediaListPlayer(VlcInstance *instance)
 VlcMediaListPlayer::VlcMediaListPlayer(VlcMediaPlayer *player,
                                        VlcInstance *instance)
     : QObject(instance),
-      _list(0),
+      _list(Q_NULLPTR),
+      _player(Q_NULLPTR),
       _mode(Vlc::DefaultPlayback)
 {
     _player = player;
@@ -171,7 +174,6 @@ void VlcMediaListPlayer::libvlc_callback(const libvlc_event_t *event,
         emit core->played();
         break;
     case libvlc_MediaListPlayerNextItemSet:
-        emit core->nextItemSet(event->u.media_list_player_next_item_set.item);
         emit core->nextItemSet(core->currentMediaList()->at(core->currentMediaList()->indexOf(event->u.media_list_player_next_item_set.item)));
         break;
     case libvlc_MediaListPlayerStopped:

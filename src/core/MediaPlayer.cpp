@@ -205,23 +205,6 @@ void VlcMediaPlayer::play()
     if (!_vlcMediaPlayer)
         return;
 
-    if (_videoWidget) {
-        _currentWId = _videoWidget->request();
-    } else {
-        _currentWId = 0;
-    }
-
-    /* Get our media instance to use our window */
-    if (_currentWId) {
-#if defined(Q_OS_WIN32)
-        libvlc_media_player_set_hwnd(_vlcMediaPlayer, (void *)_currentWId);
-#elif defined(Q_OS_DARWIN)
-        libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_currentWId);
-#elif defined(Q_OS_UNIX)
-        libvlc_media_player_set_xwindow(_vlcMediaPlayer, _currentWId);
-#endif
-    }
-
     libvlc_media_player_play(_vlcMediaPlayer);
 
     VlcError::showErrmsg();
@@ -278,6 +261,23 @@ void VlcMediaPlayer::setTime(int time)
 void VlcMediaPlayer::setVideoWidget(VlcVideoDelegate *widget)
 {
     _videoWidget = widget;
+
+    if (_videoWidget) {
+        _currentWId = _videoWidget->request();
+    } else {
+        _currentWId = 0;
+    }
+
+    /* Get our media instance to use our window */
+    if (_currentWId != 0) {
+#if defined(Q_OS_WIN32)
+        libvlc_media_player_set_hwnd(_vlcMediaPlayer, (void *)_currentWId);
+#elif defined(Q_OS_DARWIN)
+        libvlc_media_player_set_nsobject(_vlcMediaPlayer, (void *)_currentWId);
+#elif defined(Q_OS_UNIX)
+        libvlc_media_player_set_xwindow(_vlcMediaPlayer, _currentWId);
+#endif
+    }
 }
 
 bool VlcMediaPlayer::seekable() const
@@ -312,9 +312,9 @@ void VlcMediaPlayer::stop()
     if (!_vlcMediaPlayer)
         return;
 
-    if (_videoWidget)
-        _videoWidget->release();
-    _currentWId = 0;
+    //if (_videoWidget)
+    //    _videoWidget->release();
+    //_currentWId = 0;
 
     libvlc_media_player_stop(_vlcMediaPlayer);
 

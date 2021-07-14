@@ -73,37 +73,16 @@ SET(VLCQT_CORE_SRCS
     ${VLCQT_CORE_SRCS_DEPRECATED}
 )
 
-# Deprecated Include files
-SET(VLCQT_CORE_HEADERS_DEPRECATED
-    VideoFrame.h
-    VideoMemoryStream.h
-)
-
 # Define the Include files
+file(GLOB_RECURSE VLCQT_CORE_HEADERS
+  "*.h"
+)
 SET(VLCQT_CORE_HEADERS
-    AbstractVideoFrame.h
-    AbstractVideoStream.h
-    Audio.h
-    Common.h
-    Enums.h
-    Error.h
-    Instance.h
-    Media.h
-    MediaList.h
-    MediaListPlayer.h
-    MediaPlayer.h
-    MetaManager.h
-    ModuleDescription.h
-    SharedExportCore.h
-    Stats.h
-    TrackModel.h
-    Video.h
-    VideoDelegate.h
-    VideoStream.h
-    YUVVideoFrame.h
-    ${VLCQT_CORE_HEADERS_DEPRECATED}
+    ${VLCQT_CORE_HEADERS}
     ${CMAKE_BINARY_DIR}/src/Config.h
 )
+
+message(STATUS "${CMAKE_CURRENT_SOURCE_DIR}")
 
 IF(${LIBVLC_VERSION} EQUAL 0x020200 OR ${LIBVLC_VERSION} GREATER 0x020200)
     SET(VLCQT_CORE_SRCS
@@ -113,7 +92,7 @@ IF(${LIBVLC_VERSION} EQUAL 0x020200 OR ${LIBVLC_VERSION} GREATER 0x020200)
 
     SET(VLCQT_CORE_HEADERS
         ${VLCQT_CORE_HEADERS}
-        Equalizer.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Equalizer.h
     )
 ENDIF()
 
@@ -202,17 +181,10 @@ IF(NOT STATIC)
 ENDIF()
 
 
-# Provide valid includes for other modules
-IF(MINGW OR MSVC)
-    FILE(COPY ${VLCQT_CORE_HEADERS} DESTINATION "${VLCQT_SDK_INC_OUT}/core")
-ELSE()
-    FILE(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_INCLUDEDIR}")
-    ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME}
-        PRE_BUILD
-        COMMAND "${CMAKE_COMMAND}" -E create_symlink "${VLCQt_ROOT_DIR}/src/core" "${CMAKE_INSTALL_INCLUDEDIR}/core"
-        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-    )
-ENDIF()
+ADD_CUSTOM_COMMAND(TARGET ${PROJECT_NAME} POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${VLCQT_SDK_INC_OUT}/core
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${VLCQT_CORE_HEADERS} ${VLCQT_SDK_INC_OUT}/core
+)
 
 
 ################

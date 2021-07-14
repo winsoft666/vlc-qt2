@@ -17,17 +17,28 @@
 *****************************************************************************/
 
 #include <vlc/vlc.h>
-
+#include "Config.h"
 #include "core/Media.h"
 #include "core/MetaManager.h"
 
 VlcMetaManager::VlcMetaManager(VlcMedia *media)
     : _media(media)
 {
-    libvlc_media_parse(media->core());
+  if (_media) {
+#if LIBVLC_VERSION >= 0x030000
+    libvlc_media_parse_with_options(_media->core(), libvlc_media_parse_local, 1000);
+#else
+    libvlc_media_parse(_media->core());
+#endif
+  }
 }
 
-VlcMetaManager::~VlcMetaManager() {}
+VlcMetaManager::~VlcMetaManager() {
+#if LIBVLC_VERSION >= 0x030000
+  if(_media)
+    libvlc_media_parse_stop(_media->core());
+#endif
+}
 
 QString VlcMetaManager::title() const
 {

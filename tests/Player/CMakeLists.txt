@@ -42,10 +42,6 @@ add_executable(${PROJECT_NAME} WIN32
 )
 
 if (OS_WINDOWS)
-  target_compile_definitions(${PROJECT_NAME} PRIVATE
-    UNICODE
-    _UNICODE
-  )
   set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER Test)
   set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 endif()

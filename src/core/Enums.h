@@ -33,23 +33,6 @@
 class VLCQT_CORE_EXPORT Vlc : public QObject // LCOV_EXCL_LINE
 {
     Q_OBJECT
-
-    Q_ENUMS(LogLevel)
-    Q_ENUMS(ActionsType)
-    Q_ENUMS(AudioChannel)
-    Q_ENUMS(AudioCodec)
-    Q_ENUMS(AudioOutput)
-    Q_ENUMS(Deinterlacing)
-    Q_ENUMS(FillMode)
-    Q_ENUMS(Meta)
-    Q_ENUMS(Mux)
-    Q_ENUMS(PlaybackMode)
-    Q_ENUMS(Ratio)
-    Q_ENUMS(Scale)
-    Q_ENUMS(State)
-    Q_ENUMS(VideoCodec)
-    Q_ENUMS(VideoOutput)
-
 public:
     /*!
         \brief Dummy enums constructor.
@@ -283,7 +266,39 @@ public:
 #endif
         DefaultVout
     };
-
+#if QT_VERSION >= 0x050000
+    Q_ENUM(LogLevel)
+    Q_ENUM(ActionsType)
+    Q_ENUM(AudioChannel)
+    Q_ENUM(AudioCodec)
+    Q_ENUM(AudioOutput)
+    Q_ENUM(Deinterlacing)
+    Q_ENUM(FillMode)
+    Q_ENUM(Meta)
+    Q_ENUM(Mux)
+    Q_ENUM(PlaybackMode)
+    Q_ENUM(Ratio)
+    Q_ENUM(Scale)
+    Q_ENUM(State)
+    Q_ENUM(VideoCodec)
+    Q_ENUM(VideoOutput)
+#else
+    Q_ENUMS(LogLevel)
+    Q_ENUMS(ActionsType)
+    Q_ENUMS(AudioChannel)
+    Q_ENUMS(AudioCodec)
+    Q_ENUMS(AudioOutput)
+    Q_ENUMS(Deinterlacing)
+    Q_ENUMS(FillMode)
+    Q_ENUMS(Meta)
+    Q_ENUMS(Mux)
+    Q_ENUMS(PlaybackMode)
+    Q_ENUMS(Ratio)
+    Q_ENUMS(Scale)
+    Q_ENUMS(State)
+    Q_ENUMS(VideoCodec)
+    Q_ENUMS(VideoOutput)
+#endif
     // Functions
     /*!
         \brief Log level strings

@@ -149,12 +149,6 @@ signals:
     void nextItemSet(VlcMedia *media);
 
     /*!
-        \brief Signal sent on next item set
-        \param media next media item
-    */
-    void nextItemSet(libvlc_media_t *media);
-
-    /*!
         \brief Signal sent when stopped
     */
     void stopped();

@@ -142,6 +142,14 @@ void VlcMediaList::removeMedia(int index)
     VlcError::showErrmsg();
 }
 
+void VlcMediaList::removeAllMedia()
+{
+  while (count() > 0)
+  {
+    removeMedia(0);
+  }
+}
+
 void VlcMediaList::lock()
 {
     libvlc_media_list_lock(_vlcMediaList);
@@ -159,16 +167,16 @@ void VlcMediaList::libvlc_callback(const libvlc_event_t *event,
 
     switch (event->type) {
     case libvlc_MediaListItemAdded:
-        emit core->itemAdded(event->u.media_list_item_added.item, event->u.media_list_item_added.index);
+        emit core->itemAdded(VlcMedia(event->u.media_list_item_added.item), event->u.media_list_item_added.index);
         break;
     case libvlc_MediaListWillAddItem:
-        emit core->willAddItem(event->u.media_list_will_add_item.item, event->u.media_list_will_add_item.index);
+        emit core->willAddItem(VlcMedia(event->u.media_list_will_add_item.item), event->u.media_list_will_add_item.index);
         break;
     case libvlc_MediaListItemDeleted:
-        emit core->itemDeleted(event->u.media_list_item_deleted.item, event->u.media_list_item_deleted.index);
+        emit core->itemDeleted(VlcMedia(event->u.media_list_item_deleted.item), event->u.media_list_item_deleted.index);
         break;
     case libvlc_MediaListWillDeleteItem:
-        emit core->willDeleteItem(event->u.media_list_will_delete_item.item, event->u.media_list_will_delete_item.index);
+        emit core->willDeleteItem(VlcMedia(event->u.media_list_will_delete_item.item), event->u.media_list_will_delete_item.index);
         break;
     default:
         break; // LCOV_EXCL_LINE

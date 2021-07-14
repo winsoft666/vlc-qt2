@@ -119,6 +119,13 @@ public:
     QString currentLocation() const;
 
     /*!
+    \brief Current media resource location
+
+    \return QString media resource location
+    */
+    QString currentMRL() const;
+
+    /*!
         \brief Get media stats
 
         \return VlcStats media stats object
@@ -353,6 +360,7 @@ private:
     libvlc_event_manager_t *_vlcEvents;
 
     QString _currentLocation;
+    QString _currentMRL;
 };
 
 #endif // VLCQT_MEDIA_H_

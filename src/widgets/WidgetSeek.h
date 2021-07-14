@@ -27,7 +27,7 @@
 
 #include "SharedExportWidgets.h"
 
-class QAbstractSlider;
+class QSlider;
 class QLabel;
 class QProgressBar;
 class QTimer;
@@ -49,22 +49,22 @@ public:
     /*!
         \brief VlcWidgetSeek constructor
         \param player media player
-        \param slider widget to be used as slider
+        \param slider widget
         \param connectSlider connect the slider to relevant sigals, set to false if you want to handle everything yourself
         \param parent seek widget's parent GUI widget
     */
     explicit VlcWidgetSeek(VlcMediaPlayer *player,
-                           QWidget *slider = 0,
+                           QSlider *slider = 0,
                            bool connectSlider = true,
                            QWidget *parent = 0);
 
     /*!
         \brief VlcWidgetSeek constructor
-        \param slider widget to be used as slider
+        \param slider widget
         \param connectSlider connect the slider to relevant sigals, set to false if you want to handle everything yourself
         \param parent seek widget's parent GUI widget
     */
-    explicit VlcWidgetSeek(QWidget *slider,
+    explicit VlcWidgetSeek(QSlider *slider,
                            bool connectSlider,
                            QWidget *parent = 0);
 
@@ -102,12 +102,13 @@ public:
 
     /*!
         \brief Set slider widget
-        \param slider widget to be used as slider
+        \param slider widget
         \param updateSlider connect the slider to relevant sigals, set to false if you want to handle everything yourself
     */
-    virtual void setSliderWidget(QWidget *slider,
+    virtual void setSliderWidget(QSlider *slider,
                                  bool updateSlider = true);
 
+    QSlider *slider();
 protected slots:
     /*!
         \brief Update turrent time callback
@@ -128,11 +129,6 @@ protected:
     VlcMediaPlayer *_vlcMediaPlayer;
 
     /*!
-     * \brief Progress bar
-     */
-    QProgressBar *_progress;
-
-    /*!
      * \brief Elapsed time label
      */
     QLabel *_labelElapsed;
@@ -146,10 +142,10 @@ private slots:
     void end();
 
 private:
-    void initWidgetSeek(QWidget *slider);
+    void initWidgetSeek(QSlider *slider);
 
     bool _autoHide;
-    QAbstractSlider *_slider;
+    QSlider *_slider;
     bool _connectSlider;
 };
 

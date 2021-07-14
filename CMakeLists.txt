@@ -53,6 +53,17 @@ SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${VLCQT_SDK_LIB_OUT})
 # Append the QT dir to CMAKE_PREFIX_PATH
 set(CMAKE_PREFIX_PATH              ${CMAKE_PREFIX_PATH} ${QT_SDK_DIR})
 
+# Determine the platform.
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+  set(OS_MACOSX 1)
+  set(OS_POSIX 1)
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
+  set(OS_LINUX 1)
+  set(OS_POSIX 1)
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+  set(OS_WINDOWS 1)
+endif()
+
 INCLUDE(GNUInstallDirs)
 INCLUDE(Macros)
 INCLUDE(CompilerConfig)

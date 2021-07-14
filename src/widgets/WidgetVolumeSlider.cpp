@@ -37,6 +37,8 @@
 VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(VlcMediaPlayer *player,
                                              QWidget *parent)
     : QSlider(parent),
+      _currentVolume(0),
+      _timer(Q_NULLPTR),
       _vlcAudio(player->audio()),
       _vlcMediaPlayer(player)
 {
@@ -45,20 +47,30 @@ VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(VlcMediaPlayer *player,
 
 VlcWidgetVolumeSlider::VlcWidgetVolumeSlider(QWidget *parent)
     : QSlider(parent),
-      _vlcAudio(0),
-      _vlcMediaPlayer(0)
+      _currentVolume(0),
+      _timer(Q_NULLPTR),
+      _vlcAudio(Q_NULLPTR),
+      _vlcMediaPlayer(Q_NULLPTR)
 {
     initWidgetVolumeSlider();
 }
 
 VlcWidgetVolumeSlider::~VlcWidgetVolumeSlider()
 {
+    if (_timer && _timer->isActive()) {
+        _timer->stop();
+    }
     delete _timer;
+    _timer = Q_NULLPTR;
 }
 
 void VlcWidgetVolumeSlider::initWidgetVolumeSlider()
 {
     _lock = false;
+
+    this->setRange(0, 100);
+    _currentVolume = 0;
+    this->setValue(_currentVolume);
 
     _timer = new QTimer(this);
 

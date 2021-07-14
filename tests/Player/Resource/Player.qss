@@ -1,0 +1,156 @@
+* {
+    font-family: Microsoft YaHei;
+}
+
+
+#pushButtonPuaseResume[paused="Y"] {
+  border: none;
+  image: url(:/svg/Resource/play.svg);
+}
+
+#pushButtonPuaseResume[paused="N"] {
+  border: none;
+  image: url(:/svg/Resource/pause.svg);
+}
+
+#pushButtonStop {
+  border: none;
+  image: url(:/svg/Resource/stop.svg);
+}
+
+#lineEditPath {
+  border: 1px solid #E8ECF6; 
+  font-size:12px;
+  border-radius: 2px;
+}
+
+#pushButtonAdd {
+  border: none;
+  image: url(:/svg/Resource/add.svg);
+}
+
+#pushButtonDelete {
+  border: none;
+  image: url(:/svg/Resource/sub.svg);
+}
+
+#pushButtonClear {
+  border: none;
+  image: url(:/svg/Resource/clear.svg);
+}
+
+#labelStatusBar {
+  border: 1px solid gray;
+  font-size: 12px;
+}
+
+#cmbPlaybackMode, #cmbAspectRatio, #cmbCropRatio {
+	background: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 6px;
+	color: #666666;
+	font-size: 12px;
+	padding:0px 6px 0px 6px;
+}
+
+#cmbPlaybackMode::drop-down, #cmbAspectRatio::drop-down, #cmbCropRatio::drop-down {
+	border:none;
+	height: 5px;
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+  top: 6px;
+  right: 2px;
+}
+
+#cmbPlaybackMode::down-arrow, #cmbAspectRatio::down-arrow, #cmbCropRatio::down-arrow {
+  image: url(:/svg/Resource/combox_down.svg);
+}
+
+
+#vlcWidgetSeek #VLCQt_VlcWidgetSeek_LabelElapsed {
+  font-size: 12px;
+  color: #FF3636;
+}
+
+#vlcWidgetSeek #VLCQt_VlcWidgetSeek_LabelTotal {
+  font-size: 12px;
+  color: #CCCCCC;
+}
+
+#vlcWidgetSeek #VLCQt_VlcWidgetSeek_Slider::add-page:horizontal {
+	background-color: #CCCCCC;
+	border: none;
+	border-radius: 0px;
+	height: 2px;
+	margin: 12px 0px 12px 0px;
+}
+
+#vlcWidgetSeek #VLCQt_VlcWidgetSeek_Slider::sub-page:horizontal {
+	background: #FF3636;
+	border: none;
+	border-radius: 0px;
+	height: 2px;
+	margin: 12px 0px 12px 0px;
+}
+
+#vlcWidgetSeek #VLCQt_VlcWidgetSeek_Slider::groove:horizontal {
+	border: none;
+  background-color: #CCCCCC;
+	border-radius: 0px;
+	height: 2px;
+	margin: 12px 0;
+}
+
+#vlcWidgetSeek #VLCQt_VlcWidgetSeek_Slider::handle:horizontal {
+	border: none;
+	width: 20px;
+  background-color: #CCCCCC;
+  margin: -9px 0px -9px 0px;
+  border-radius: 10px;
+}
+
+#vlcWidgetSeek #VLCQt_VlcWidgetSeek_Slider::handle:horizontal:hover {
+	border: none;
+	width: 20px;
+  background-color: #FF3636;
+  margin: -9px 0px -9px 0px;
+  border-radius: 10px;
+}
+
+#vlcWidgetVolSlider::add-page:horizontal {
+	background: #CCCCCC;
+	border: none;
+	border-radius: 2px;
+	height: 4px;
+	margin: 8px 0px 8px 0px;
+}
+
+#vlcWidgetVolSlider::sub-page:horizontal {
+	background: #FF3636;
+	border: none;
+	border-radius: 2px;
+	height: 4px;
+	margin: 8px 0px 8px 0px;
+}
+
+#vlcWidgetVolSlider::groove:horizontal {
+	border: none;
+	border-radius: 2px;
+	height: 4px;
+	margin: 8px 0;
+	background-color: #CCCCCC;
+}
+
+#vlcWidgetVolSlider::handle:horizontal {
+	border: none;
+	width: 24px;
+	margin: -8px 0;
+	image: url(:/svg/Resource/slider_handle_n.svg);
+}
+
+#vlcWidgetVolSlider::handle:horizontal:hover {
+	border: none;
+	width: 24px;
+	margin: -8px 0;
+	image: url(:/svg/Resource/slider_handle_h.svg);
+}

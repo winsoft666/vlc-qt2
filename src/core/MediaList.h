@@ -112,13 +112,17 @@ public:
     */
     void removeMedia(int index);
 
+    /*!
+    \brief Remove all media items.
+    */
+    void removeAllMedia();
 signals:
     /*!
         \brief Signal sent on item added
         \param item item that was added
         \param index index of item
     */
-    void itemAdded(libvlc_media_t *item,
+    void itemAdded(VlcMedia &item,
                    int index);
 
     /*!
@@ -126,7 +130,7 @@ signals:
         \param item item that will be added
         \param index index of item
     */
-    void willAddItem(libvlc_media_t *item,
+    void willAddItem(VlcMedia &item,
                      int index);
 
     /*!
@@ -134,7 +138,7 @@ signals:
         \param item item that was added
         \param index index of item
     */
-    void itemDeleted(libvlc_media_t *item,
+    void itemDeleted(VlcMedia &item,
                      int index);
 
     /*!
@@ -142,7 +146,7 @@ signals:
         \param item item that will be deleted
         \param index index of item
     */
-    void willDeleteItem(libvlc_media_t *item,
+    void willDeleteItem(VlcMedia &item,
                         int index);
 
 private:

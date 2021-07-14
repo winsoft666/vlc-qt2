@@ -25,12 +25,10 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QSlider>
-#include <QtWidgets/QProgressBar>
 #else
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLabel>
 #include <QtGui/QSlider>
-#include <QtGui/QProgressBar>
 #endif
 
 #include "core/Error.h"
@@ -39,29 +37,27 @@
 #include "widgets/WidgetSeek.h"
 
 VlcWidgetSeek::VlcWidgetSeek(VlcMediaPlayer *player,
-                             QWidget *slider,
+                             QSlider *slider,
                              bool connectSlider,
                              QWidget *parent)
     : QWidget(parent),
       _vlcMediaPlayer(player),
-      _progress(0),
-      _labelElapsed(0),
-      _labelTotal(0),
-      _slider(0),
+      _labelElapsed(Q_NULLPTR),
+      _labelTotal(Q_NULLPTR),
+      _slider(Q_NULLPTR),
       _connectSlider(connectSlider)
 {
     initWidgetSeek(slider);
 }
 
-VlcWidgetSeek::VlcWidgetSeek(QWidget *slider,
+VlcWidgetSeek::VlcWidgetSeek(QSlider *slider,
                              bool connectSlider,
                              QWidget *parent)
     : QWidget(parent),
-      _vlcMediaPlayer(0),
-      _progress(0),
-      _labelElapsed(0),
-      _labelTotal(0),
-      _slider(0),
+      _vlcMediaPlayer(Q_NULLPTR),
+      _labelElapsed(Q_NULLPTR),
+      _labelTotal(Q_NULLPTR),
+      _slider(Q_NULLPTR),
       _connectSlider(connectSlider)
 {
     initWidgetSeek(slider);
@@ -69,57 +65,60 @@ VlcWidgetSeek::VlcWidgetSeek(QWidget *slider,
 
 VlcWidgetSeek::VlcWidgetSeek(QWidget *parent)
     : QWidget(parent),
-      _vlcMediaPlayer(0),
-      _progress(0),
-      _labelElapsed(0),
-      _labelTotal(0),
-      _slider(0),
+      _vlcMediaPlayer(Q_NULLPTR),
+      _labelElapsed(Q_NULLPTR),
+      _labelTotal(Q_NULLPTR),
+      _slider(Q_NULLPTR),
       _connectSlider(true)
 {
-    initWidgetSeek(0);
+    initWidgetSeek(Q_NULLPTR);
 }
 
 VlcWidgetSeek::~VlcWidgetSeek() {}
 
-void VlcWidgetSeek::initWidgetSeek(QWidget *slider)
+void VlcWidgetSeek::initWidgetSeek(QSlider *slider)
 {
     _autoHide = false;
+    _slider = slider;
 
-    if (slider == 0)
-        slider = new QSlider();
+    if (!_slider) {
+        _slider = new QSlider();
+        _slider->setObjectName("VLCQt_VlcWidgetSeek_Slider");
+        _slider->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    }
 
-    QAbstractSlider *sl = qobject_cast<QAbstractSlider *>(slider);
-    _slider = sl;
-    if (sl != 0 && _connectSlider) {
-        sl->setOrientation(Qt::Horizontal);
-        sl->setMaximum(1);
-        if (_vlcMediaPlayer != 0) {
-            connect(sl, SIGNAL(valueChanged(int)), _vlcMediaPlayer, SLOT(setTime(int)));
-            connect(_vlcMediaPlayer, SIGNAL(seekableChanged(bool)), sl, SLOT(setEnabled(bool)));
+    if (_slider && _connectSlider) {
+        _slider->setOrientation(Qt::Horizontal);
+        _slider->setMinimum(0);
+        _slider->setMaximum(1);
+        _slider->setEnabled(false);
+        if (_vlcMediaPlayer) {
+            connect(_slider, SIGNAL(valueChanged(int)), _vlcMediaPlayer, SLOT(setTime(int)));
+            connect(_vlcMediaPlayer, SIGNAL(seekableChanged(bool)), _slider, SLOT(setEnabled(bool)));
         }
     }
-    QProgressBar *bar = qobject_cast<QProgressBar *>(slider);
-    _progress = bar;
-    if (bar != 0 && _connectSlider) {
-        bar->setOrientation(Qt::Horizontal);
-        bar->setMaximum(1);
-        bar->setTextVisible(false);
-    }
 
-    if (_labelElapsed == 0)
-        _labelElapsed = new QLabel(this);
+    if (!_labelElapsed) {
+        _labelElapsed = new QLabel();
+        _labelElapsed->setObjectName("VLCQt_VlcWidgetSeek_LabelElapsed");
+    }
     _labelElapsed->setText("--:--");
 
-    if (_labelTotal == 0)
-        _labelTotal = new QLabel(this);
+    if (!_labelTotal) {
+        _labelTotal = new QLabel();
+        _labelTotal->setObjectName("VLCQt_VlcWidgetSeek_LabelTotal");
+    }
     _labelTotal->setText("--:--");
 
-    delete layout();
-    QHBoxLayout *layout = new QHBoxLayout;
+    QHBoxLayout *layout = new QHBoxLayout();
+    layout->setSpacing(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(_labelElapsed);
-    layout->addWidget(slider);
+    layout->addSpacing(6);
+    layout->addWidget(_slider);
+    layout->addSpacing(6);
     layout->addWidget(_labelTotal);
-    setLayout(layout);
+    this->setLayout(layout);
 }
 
 void VlcWidgetSeek::setAutoHide(bool autoHide)
@@ -136,55 +135,53 @@ void VlcWidgetSeek::setMediaPlayer(VlcMediaPlayer *player)
         disconnect(_vlcMediaPlayer, SIGNAL(timeChanged(int)), this, SLOT(updateCurrentTime(int)));
         disconnect(_vlcMediaPlayer, SIGNAL(end()), this, SLOT(end()));
         disconnect(_vlcMediaPlayer, SIGNAL(stopped()), this, SLOT(end()));
-        if (_slider != 0) {
+        if (_slider) {
             disconnect(_slider, SIGNAL(valueChanged(int)), _vlcMediaPlayer, SLOT(setTime(int)));
             disconnect(_vlcMediaPlayer, SIGNAL(seekableChanged(bool)), _slider, SLOT(setEnabled(bool)));
         }
     }
 
     _vlcMediaPlayer = player;
-    if (player == 0)
+    if (!player)
         return;
 
     connect(_vlcMediaPlayer, SIGNAL(lengthChanged(int)), this, SLOT(updateFullTime(int)));
     connect(_vlcMediaPlayer, SIGNAL(timeChanged(int)), this, SLOT(updateCurrentTime(int)));
     connect(_vlcMediaPlayer, SIGNAL(end()), this, SLOT(end()));
     connect(_vlcMediaPlayer, SIGNAL(stopped()), this, SLOT(end()));
-    if (_slider != 0 && _connectSlider) {
+    if (_slider && _connectSlider) {
         _slider->setOrientation(Qt::Horizontal);
         _slider->setMaximum(1);
+        _slider->setEnabled(false);
         connect(_slider, SIGNAL(valueChanged(int)), _vlcMediaPlayer, SLOT(setTime(int)));
         connect(_vlcMediaPlayer, SIGNAL(seekableChanged(bool)), _slider, SLOT(setEnabled(bool)));
-    } else if (_progress != 0 && _connectSlider) {
-        _progress->setOrientation(Qt::Horizontal);
-        _progress->setMaximum(1);
-        _progress->setTextVisible(false);
     }
 }
 
-void VlcWidgetSeek::setSliderWidget(QWidget *slider,
+void VlcWidgetSeek::setSliderWidget(QSlider *slider,
                                     bool updateSlider)
 {
     _connectSlider = updateSlider;
-    if (slider == 0)
+    if (slider == Q_NULLPTR)
         return;
-    if (slider == _slider || slider == _progress)
+    if (slider == _slider)
         return;
     delete _slider;
-    delete _progress;
     initWidgetSeek(slider);
+}
+
+QSlider *VlcWidgetSeek::slider()
+{
+    return _slider;
 }
 
 void VlcWidgetSeek::end()
 {
     _labelElapsed->setText("--:--");
     _labelTotal->setText("--:--");
-    if (_slider != 0 && _connectSlider) {
+    if (_slider && _connectSlider) {
         _slider->setMaximum(1);
         _slider->setValue(0);
-    } else if (_progress != 0 && _connectSlider) {
-        _progress->setMaximum(1);
-        _progress->setValue(0);
     }
 }
 
@@ -202,8 +199,6 @@ void VlcWidgetSeek::updateCurrentTime(int time)
         _slider->blockSignals(true);
         _slider->setValue(time);
         _slider->blockSignals(false);
-    } else if (_progress && _connectSlider) {
-        _progress->setValue(time);
     }
 }
 
@@ -225,8 +220,6 @@ void VlcWidgetSeek::updateFullTime(int time)
     if (!time) {
         if (_slider && _connectSlider)
             _slider->setMaximum(1);
-        else if (_progress && _connectSlider)
-            _progress->setMaximum(1);
         setVisible(!_autoHide);
     } else {
         if (_slider && _connectSlider) {
@@ -234,8 +227,6 @@ void VlcWidgetSeek::updateFullTime(int time)
             _slider->setSingleStep(1000);
             _slider->setPageStep(time / 100);
         }
-        if (_progress && _connectSlider)
-            _progress->setMaximum(time);
         setVisible(true);
     }
 }
