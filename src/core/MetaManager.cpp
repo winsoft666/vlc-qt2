@@ -28,7 +28,7 @@ VlcMetaManager::VlcMetaManager(VlcMedia *media)
 #if LIBVLC_VERSION >= 0x030000
     libvlc_media_parse_with_options(_media->core(), libvlc_media_parse_local, 1000);
 #else
-    libvlc_media_parse(_media->core());
+      libvlc_media_parse(_media->core());
 #endif
   }
 }

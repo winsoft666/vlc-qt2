@@ -13,6 +13,9 @@ SET(LIBVLCCORE_LIBRARY  "d:/sourcecode/Github/vlc-qt/vlc-3.0.14/sdk/lib/libvlcco
 SET(LIBVLC_INCLUDE_DIR  "d:/sourcecode/Github/vlc-qt/vlc-3.0.14/sdk/include")
 SET(LIBVLC_BIN_DIR      "d:/sourcecode/Github/vlc-qt/vlc-3.0.14/sdk/bin")
 
+SET(LIBVLC_PLUGINS_DIR  "${LIBVLC_BIN_DIR}/plugins")
+SET(LIBVLC_LIB_DIR      "${LIBVLC_BIN_DIR}/lib")
+
 # VLCQt Version
 SET(PROJECT_VERSION_MAJOR 2)
 SET(PROJECT_VERSION_MINOR 0)

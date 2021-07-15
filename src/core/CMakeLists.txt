@@ -39,15 +39,6 @@ ENDIF()
 ###################
 # List of sources #
 ###################
-# Deprecated C++ source files
-SET(VLCQT_CORE_SRCS_DEPRECATED
-    VideoFrame.cpp
-    VideoMemoryStream.cpp
-)
-IF(NOT MSVC)
-    SET_SOURCE_FILES_PROPERTIES (${VLCQT_CORE_SRCS_DEPRECATED} PROPERTIES COMPILE_FLAGS -Wno-deprecated)
-ENDIF()
-
 # Define the C++ source files
 SET(VLCQT_CORE_SRCS
     AbstractVideoFrame.cpp
@@ -70,7 +61,6 @@ SET(VLCQT_CORE_SRCS
     VideoDelegate.h
     VideoStream.cpp
     YUVVideoFrame.cpp
-    ${VLCQT_CORE_SRCS_DEPRECATED}
 )
 
 # Define the Include files
@@ -171,11 +161,8 @@ if(WIN32)
 endif(WIN32)
 
 # Link the required libraries
-IF(QT_VERSION MATCHES 4)
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} PRIVATE Qt4::QtCore)
-ELSE()
-    TARGET_LINK_LIBRARIES(${PROJECT_NAME} PRIVATE Qt5::Core)
-ENDIF()
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} PRIVATE Qt5::Core)
+
 IF(NOT STATIC)
     TARGET_LINK_LIBRARIES(${PROJECT_NAME} PRIVATE ${LIBVLC_LIBRARY} ${LIBVLCCORE_LIBRARY})
 ENDIF()

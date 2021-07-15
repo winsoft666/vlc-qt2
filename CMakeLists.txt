@@ -36,7 +36,7 @@ INCLUDE(ParseVersion)
 PROJECT(VLC-Qt
         VERSION ${VLCQT_VERSION})
 
-SET(PROJECT_AUTHOR        "Tadej Novak")
+SET(PROJECT_AUTHOR        "Tadej Novak; Jeffery Jiang")
 SET(PROJECT_COPYRIGHT     "Copyright (C) 2021 ${PROJECT_AUTHOR}.")
 SET(PROJECT_DESCRIPTION   "VLC-Qt - Qt bindings for libVLC")
 
@@ -70,6 +70,11 @@ INCLUDE(CompilerConfig)
 INCLUDE(Dependencies)
 INCLUDE(Platform)
 
+IF(${LIBVLC_VERSION} LESS 0x020200)
+  MESSAGE(FATAL_ERROR "Only support libvlc 2.2.0+")
+ELSE()
+  MESSAGE(STATUS "Use libvlc ${LIBVLC_VERSION}")
+ENDIF()
 
 ###################
 # Compile and set #
@@ -82,7 +87,7 @@ ADD_SUBDIRECTORY(docs)
 # Tests #
 #########
 IF(BUILD_TESTING)
-    IF(QT_VERSION MATCHES 5 AND NOT MOBILE)
+    IF(NOT MOBILE)
         ENABLE_TESTING(true)
         ADD_SUBDIRECTORY(tests)
 

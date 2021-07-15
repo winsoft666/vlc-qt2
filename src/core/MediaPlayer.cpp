@@ -25,10 +25,7 @@
 #include "core/MediaPlayer.h"
 #include "core/Video.h"
 #include "core/VideoDelegate.h"
-
-#if LIBVLC_VERSION >= 0x020200
 #include "core/Equalizer.h"
-#endif
 
 VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     : QObject(instance)
@@ -44,9 +41,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
 
     _vlcAudio = new VlcAudio(this);
     _vlcVideo = new VlcVideo(this);
-#if LIBVLC_VERSION >= 0x020200
     _vlcEqualizer = new VlcEqualizer(this);
-#endif
 
     _videoWidget = 0;
     _media = 0;
@@ -62,9 +57,7 @@ VlcMediaPlayer::~VlcMediaPlayer()
 
     delete _vlcAudio;
     delete _vlcVideo;
-#if LIBVLC_VERSION >= 0x020200
     delete _vlcEqualizer;
-#endif
 
     libvlc_media_player_release(_vlcMediaPlayer);
 
@@ -86,12 +79,10 @@ VlcVideo *VlcMediaPlayer::video() const
     return _vlcVideo;
 }
 
-#if LIBVLC_VERSION >= 0x020200
 VlcEqualizer *VlcMediaPlayer::equalizer() const
 {
     return _vlcEqualizer;
 }
-#endif
 
 void VlcMediaPlayer::createCoreConnections()
 {
@@ -421,7 +412,7 @@ float VlcMediaPlayer::sampleAspectRatio()
 {
     if (!_vlcMediaPlayer)
         return 0.0;
-#if LIBVLC_VERSION >= 0x020100
+
     float sar = 0.0;
 
     libvlc_media_track_t **tracks;
@@ -440,9 +431,6 @@ float VlcMediaPlayer::sampleAspectRatio()
     }
 
     return sar;
-#else
-    return 1.0;
-#endif // LIBVLC_VERSION >= 0x020100
 }
 
 void VlcMediaPlayer::setPosition(float pos)

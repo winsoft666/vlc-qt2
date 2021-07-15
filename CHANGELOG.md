@@ -1,6 +1,7 @@
 # VLC-Qt Changelog
 
 ## Unreleased
+ - Update VLC to 3.0.14
  - Protect signals handling for null pointers in VlcVideoWidget (issue #211)
  - Labels are now protected in WidgetSeek to allow easier subclassing (issue #188)
  - Fix: Volume slider dragging (issue #189)

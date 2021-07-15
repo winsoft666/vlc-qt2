@@ -4,21 +4,21 @@
 VLC-Qt can be built with any common compiler (g++, clang, MSVC, MinGW).
 Build files are generated using [CMake](http://www.cmake.org) (3.0.2 or later).
 
-All stable versions of VLC since 2.1 work with VLC-Qt.
-Qt 5 (version 5.5 or later recommende) is recommended as Qt 4 support is
-considered deprecated. Binaries will always be provided for latest Qt version
-released at the time of release.
-
-**Make sure you have git submodules initialised or you may experience build issues.**
 
 ## CMake configuration
-There are some specific CMake flags may need:
+Update the [config.cmake](config.cmake) to set the required build configurations.
 
- * `COVERAGE`: generate coverage report, OFF by default
- * `DEBUG_SUFFIX`: add debug suffix 'd' to the libraries, ON on Widows, OFF elsewhere
+ * `QT_SDK_DIR`: Qt sdk directory.
  * `LIBVLC_VERSION`: set VLC version you are compiling with to disable unsupported
  	features, should be defined as base 16 integer like `0x020200`, defaults to
  	latest stable VLC version
+ * `LIBVLC_LIBRARY`: the path of libvlc.lib
+ * `LIBVLCCORE_LIBRARY`: the path of libvlccore.lib
+ * `LIBVLC_INCLUDE_DIR`: the directory of libvlc-sdk header files
+ * `LIBVLC_BIN_DIR`: the directory of libvlc-sdk bin files
+ * `PROJECT_VERSION_MAJOR`: the VLC-Qt library major version, need same as VERSION file
+ * `PROJECT_VERSION_MINOR`: the VLC-Qt library minor version, need same as VERSION file
+ * `PROJECT_VERSION_PATCH`: the VLC-Qt library patch version, need same as VERSION file
  * `STATIC`: build statically, OFF by default
  * `SYSTEM_QML`: detect and install to system QML location, OFF by default
 
@@ -30,7 +30,6 @@ Extra platform specific flags:
  * `WITH_X11`: link with X11, required by some Linux distributions, OFF by default
 
 Building in separate `build` directory is recommended.
-There is a `test` target to run automatic tests for the library.
 
 ## Platform specific instructions
 ### macOS
@@ -42,7 +41,6 @@ Qt in `PATH` and VLC in `/Applications` will be used.
 
 Make example:
 ```
-$ export PATH=$PATH:/path/to/Qt/5.6/clang_64/bin
 $ mkdir build
 $ cd build
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
@@ -60,19 +58,11 @@ with release build after using it in your project.
 
 Supported generators for MSVC are `nmake`, `jom` and `ninja`;
 for MinGW: `mingw32-make` and `ninja`.
-Run specific Qt shell to select its version. VLC path needs to be specified manually.
 
-Ninja example for MSVC64:
+Simple example:
 ```
-$ md build
-$ cd build
-$ cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug ^
-  -DCMAKE_INSTALL_PREFIX="E:/install/vlc-qt/msvc64" ^
-  -DLIBVLC_LIBRARY="E:/vlc/win64/sdk/lib/libvlc.lib" ^
-  -DLIBVLCCORE_LIBRARY="E:/vlc/win64/sdk/lib/libvlccore.lib" ^
-  -DLIBVLC_INCLUDE_DIR="E:/vlc/win64/sdk/include"
-$ ninja
-$ ninja install
+mkdir build && cd build
+cmake .. && cmake --build .
 ```
 
 ### Linux
