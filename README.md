@@ -12,18 +12,15 @@ in cross-platform spirit so it may work on other systems but is not supported.
  - Qt only support Qt5+
  - libVLC only support 2.1+
 
-Latest source is also available via Git:
-```bash
-  git clone git@github.com:winsoft666/vlc-qt.git
-```
-
 Master branch is considered stable and working on all supported platforms.
 All development is made in branches. You can also find specific releases by
 browsing tags.
 
 
-## Examples and guides
-VLC-Qt examples are now located in the `tests`.
+## Examples
+`Player` is a perfect example about how to use VLC-Qt in `tests` folder.
+
+![screenshot on windows](screenshots/screenshot-1.png)
 
 
 ## Building and requirements
