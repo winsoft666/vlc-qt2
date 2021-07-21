@@ -26,7 +26,6 @@
 #include "qml/QmlPlayer.h"
 #include "qml/QmlSource.h"
 #include "qml/QmlVideoOutput.h"
-#include "qml/QmlVideoPlayer.h"
 
 void VlcQml::registerTypes()
 {
@@ -39,7 +38,4 @@ void VlcQml::registerTypes()
 
     qmlRegisterType<VlcQmlPlayer>(m, 1, 1, "VlcPlayer");
     qmlRegisterType<VlcQmlVideoOutput>(m, 1, 1, "VlcVideoOutput");
-
-    // Deprecated
-    qmlRegisterType<VlcQmlVideoPlayer>(m, 1, 0, "VlcVideoPlayer");
 }
