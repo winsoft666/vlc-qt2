@@ -86,6 +86,14 @@ void VlcVideo::setAspectRatio(const Vlc::Ratio &ratio)
     }
 }
 
+void VlcVideo::setCustomAspectRatio(const QString &ratio)
+{
+    if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {
+        libvlc_video_set_aspect_ratio(_vlcMediaPlayer, ratio.toUtf8().data());
+        VlcError::showErrmsg();
+    }
+}
+
 void VlcVideo::setCropGeometry(const Vlc::Ratio &ratio)
 {
     if (_vlcMediaPlayer && libvlc_media_player_has_vout(_vlcMediaPlayer)) {

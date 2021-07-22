@@ -323,13 +323,6 @@ signals:
     /*!
         \brief Signal sent on parsed change
         \param status new parsed status
-        \deprecated Deprecated since VLC-Qt 1.1, will be removed in 2.0
-    */
-    Q_DECL_DEPRECATED void parsedChanged(int status);
-
-    /*!
-        \brief Signal sent on parsed change
-        \param status new parsed status
     */
     void parsedChanged(bool status);
 

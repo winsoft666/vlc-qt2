@@ -87,9 +87,15 @@ public:
 
     /*!
         \brief Set new video aspect ratio.
-        \param ratio new video aspect-ratio or NULL to reset to default (Vlc::Ratio)
+        \param ratio new video aspect-ratio or Vlc::Ratio::Original to reset to default (Vlc::Ratio)
     */
     void setAspectRatio(const Vlc::Ratio &ratio);
+
+    /*!
+    \brief Set new video aspect ratio.
+    \param ratio new video aspect-ratio string or set an empty string to reset to default (QString)
+    */
+    void setCustomAspectRatio(const QString &ratio);
 
     /*!
         \brief Set new crop filter geometry.

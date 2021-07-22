@@ -77,46 +77,10 @@ public:
     inline Vlc::Ratio currentAspectRatio() const { return _currentAspectRatio; }
 
     /*!
-        \brief Get default aspect ratio setting
-        \return default aspect ratio
-    */
-    inline Vlc::Ratio defaultAspectRatio() const { return _defaultAspectRatio; }
-
-    /*!
-        \brief Set current aspect ratio setting
-        \param ratio current aspect ratio
-    */
-    void setCurrentAspectRatio(const Vlc::Ratio &ratio);
-
-    /*!
-        \brief Set default aspect ratio setting
-        \param ratio default aspect ratio
-    */
-    void setDefaultAspectRatio(const Vlc::Ratio &ratio);
-
-    /*!
         \brief Get current crop ratio setting
         \return current crop ratio
     */
     inline Vlc::Ratio currentCropRatio() const { return _currentCropRatio; }
-
-    /*!
-        \brief Get default crop ratio setting
-        \return default crop ratio
-    */
-    inline Vlc::Ratio defaultCropRatio() const { return _defaultCropRatio; }
-
-    /*!
-        \brief Set current crop ratio setting
-        \param ratio current crop ratio
-    */
-    void setCurrentCropRatio(const Vlc::Ratio &ratio);
-
-    /*!
-        \brief Set default crop ratio setting
-        \param ratio default crop ratio
-    */
-    void setDefaultCropRatio(const Vlc::Ratio &ratio);
 
     /*!
         \brief Get current deinterlacing filter setting
@@ -125,46 +89,10 @@ public:
     inline Vlc::Deinterlacing currentDeinterlacing() const { return _currentDeinterlacing; }
 
     /*!
-        \brief Get default deinterlacing filter setting
-        \return current deinterlacing filter
-    */
-    inline Vlc::Deinterlacing defaultDeinterlacing() const { return _defaultDeinterlacing; }
-
-    /*!
-        \brief Set current deinterlacing filter setting
-        \param deinterlacing current deinterlacing filter
-    */
-    void setCurrentDeinterlacing(const Vlc::Deinterlacing &deinterlacing);
-
-    /*!
-        \brief Set default deinterlacing filter setting
-        \param deinterlacing default deinterlacing filter
-    */
-    void setDefaultDeinterlacing(const Vlc::Deinterlacing &deinterlacing);
-
-    /*!
         \brief Get current scale ratio setting
         \return current scale ratio
     */
     inline Vlc::Scale currentScale() const { return _currentScale; }
-
-    /*!
-        \brief Get default scale ratio setting
-        \return default scale ratio
-    */
-    inline Vlc::Scale defaultScale() const { return _defaultScale; }
-
-    /*!
-        \brief Set current scale ratio setting
-        \param scale current scale ratio
-    */
-    void setCurrentScale(const Vlc::Scale &scale);
-
-    /*!
-        \brief Set default scale ratio setting
-        \param scale default scale ratio
-    */
-    void setDefaultScale(const Vlc::Scale &scale);
 
     /*!
         \brief Set media player if initialised without it
@@ -188,31 +116,16 @@ public:
 
 public slots:
     /*!
-        \brief Enable default video settings
-
-        crop, ratio, deinterlacing filter, scale
-    */
-    void enableDefaultSettings();
-
-    /*!
-        \brief Enable previous video settings
-
-        crop, ratio, deinterlacing filter, scale
-    */
-    void enablePreviousSettings();
-
-    /*!
-        \brief Initialize default video settings
-
-        Set but not apply crop, ratio, deinterlacing filter, scale
-    */
-    void initDefaultSettings();
-
-    /*!
         \brief Set aspect ratio
         \param ratio aspect ratio
     */
     void setAspectRatio(const Vlc::Ratio &ratio);
+
+    /*!
+    \brief Set custom aspect ratio
+    \param ratio aspect ratio string, such as 500:400
+    */
+    void setCustomAspectRatio(const QString &ratio);
 
     /*!
         \brief Set crop ratio
@@ -232,6 +145,9 @@ public slots:
     */
     void setScale(const Vlc::Scale &scale);
 
+protected:
+  void resizeEvent(QResizeEvent *event) override;
+
 private slots:
     void applyPreviousSettings();
 
@@ -244,14 +160,8 @@ private:
     QWidget *_video;
     QLayout *_layout;
 
-    bool _enableSettings;
-
-    Vlc::Ratio _defaultAspectRatio;
-    Vlc::Ratio _defaultCropRatio;
-    Vlc::Deinterlacing _defaultDeinterlacing;
-    Vlc::Scale _defaultScale;
-
     Vlc::Ratio _currentAspectRatio;
+    QString _currentCustomAspectRatio;
     Vlc::Ratio _currentCropRatio;
     Vlc::Deinterlacing _currentDeinterlacing;
     Vlc::Scale _currentScale;

@@ -68,15 +68,11 @@ VlcWidgetVideo::~VlcWidgetVideo()
 
 void VlcWidgetVideo::initWidgetVideo()
 {
-    _enableSettings = false;
-    _defaultAspectRatio = Vlc::Original;
-    _defaultCropRatio = Vlc::Original;
-    _defaultDeinterlacing = Vlc::Disabled;
-    _defaultScale = Vlc::NoScale;
     _currentAspectRatio = Vlc::Original;
     _currentCropRatio = Vlc::Original;
     _currentDeinterlacing = Vlc::Disabled;
     _currentScale = Vlc::NoScale;
+    _currentCustomAspectRatio = "UNUSED";
 
     _layout = new QHBoxLayout(this);
     _layout->setContentsMargins(0, 0, 0, 0);
@@ -100,87 +96,45 @@ void VlcWidgetVideo::setMediaPlayer(VlcMediaPlayer *player)
     }
 }
 
-void VlcWidgetVideo::setCurrentAspectRatio(const Vlc::Ratio &ratio)
-{
-    _currentAspectRatio = ratio;
-}
-
-void VlcWidgetVideo::setCurrentCropRatio(const Vlc::Ratio &ratio)
-{
-    _currentCropRatio = ratio;
-}
-
-void VlcWidgetVideo::setCurrentDeinterlacing(const Vlc::Deinterlacing &deinterlacing)
-{
-    _currentDeinterlacing = deinterlacing;
-}
-
-void VlcWidgetVideo::setCurrentScale(const Vlc::Scale &scale)
-{
-    _currentScale = scale;
-}
-
-void VlcWidgetVideo::setDefaultAspectRatio(const Vlc::Ratio &ratio)
-{
-    _defaultAspectRatio = ratio;
-}
-
-void VlcWidgetVideo::setDefaultCropRatio(const Vlc::Ratio &ratio)
-{
-    _defaultCropRatio = ratio;
-}
-
-void VlcWidgetVideo::setDefaultDeinterlacing(const Vlc::Deinterlacing &deinterlacing)
-{
-    _defaultDeinterlacing = deinterlacing;
-}
-
-void VlcWidgetVideo::setDefaultScale(const Vlc::Scale &scale)
-{
-    _defaultScale = scale;
-}
-
-void VlcWidgetVideo::enableDefaultSettings()
-{
-    initDefaultSettings();
-
-    enablePreviousSettings();
-}
-
-void VlcWidgetVideo::enablePreviousSettings()
-{
-    _enableSettings = true;
-}
-
-void VlcWidgetVideo::initDefaultSettings()
-{
-    _currentAspectRatio = defaultAspectRatio();
-    _currentCropRatio = defaultCropRatio();
-    _currentDeinterlacing = defaultDeinterlacing();
-    _currentScale = defaultScale();
-}
-
 void VlcWidgetVideo::applyPreviousSettings()
 {
-    if (!_enableSettings)
-        return;
-
     if (!_vlcMediaPlayer)
         return;
 
-    _vlcMediaPlayer->video()->setAspectRatio(_currentAspectRatio);
+    if (_currentCustomAspectRatio != "UNUSED") {
+        _vlcMediaPlayer->video()->setCustomAspectRatio(_currentCustomAspectRatio);
+    } else {
+        if (_currentAspectRatio == Vlc::Ratio::KeepStretch) {
+            QString strRatio = QString("%1:%2").arg(this->width()).arg(this->height());
+            _vlcMediaPlayer->video()->setCustomAspectRatio(strRatio);
+        } else {
+            _vlcMediaPlayer->video()->setAspectRatio(_currentAspectRatio);
+        }
+    }
+
     _vlcMediaPlayer->video()->setCropGeometry(_currentCropRatio);
     _vlcMediaPlayer->video()->setScale(_currentScale);
     _vlcMediaPlayer->video()->setDeinterlace(_currentDeinterlacing);
-
-    _enableSettings = false;
 }
 
 void VlcWidgetVideo::setAspectRatio(const Vlc::Ratio &ratio)
 {
     if (_vlcMediaPlayer) {
         _currentAspectRatio = ratio;
-        _vlcMediaPlayer->video()->setAspectRatio(ratio);
+        if (ratio == Vlc::Ratio::KeepStretch) {
+            QString strRatio = QString("%1:%2").arg(this->width()).arg(this->height());
+            _vlcMediaPlayer->video()->setCustomAspectRatio(strRatio);
+        } else {
+            _vlcMediaPlayer->video()->setAspectRatio(ratio);
+        }
+    }
+}
+
+void VlcWidgetVideo::setCustomAspectRatio(const QString &ratio)
+{
+    if (_vlcMediaPlayer) {
+        _currentCustomAspectRatio = ratio;
+        _vlcMediaPlayer->video()->setCustomAspectRatio(ratio);
     }
 }
 
@@ -206,6 +160,17 @@ void VlcWidgetVideo::setScale(const Vlc::Scale &scale)
         _currentScale = scale;
         _vlcMediaPlayer->video()->setScale(scale);
     }
+}
+
+void VlcWidgetVideo::resizeEvent(QResizeEvent *event)
+{
+    if (_currentAspectRatio == Vlc::Ratio::KeepStretch && _vlcMediaPlayer) {
+        if (_vlcMediaPlayer->video()) {
+            QString strRatio = QString("%1:%2").arg(this->width()).arg(this->height());
+            _vlcMediaPlayer->video()->setCustomAspectRatio(strRatio);
+        }
+    }
+    QWidget::resizeEvent(event);
 }
 
 void VlcWidgetVideo::sync()

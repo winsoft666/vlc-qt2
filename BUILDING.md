@@ -31,6 +31,9 @@ Extra platform specific flags:
 
 Building in separate `build` directory is recommended.
 
+
+> Download libvlc sdk from [http://download.videolan.org/pub/videolan/vlc/](http://download.videolan.org/pub/videolan/vlc/), such as `vlc-3.0.16-win32.7z`
+
 ## Platform specific instructions
 ### macOS
 You need to prepare VLC libraries and plugins before building. After `cmake` run

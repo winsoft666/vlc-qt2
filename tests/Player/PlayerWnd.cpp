@@ -42,7 +42,6 @@ PlayerWnd::PlayerWnd(QWidget *parent) : QWidget(parent), vlcInstance_(nullptr), 
     connect(cmbAspectRatio_, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PlayerWnd::onAspectRatioCurrentIndexChanged);
     connect(cmbCropRatio_, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PlayerWnd::onCropRatioCurrentIndexChanged);
 
-
     qunsetenv("VLC_PLUGIN_PATH");
 #ifndef Q_OS_DARWIN
     VlcCommon::setPluginPath(QString(LIBVLC_PLUGINS_DIR));
@@ -87,7 +86,6 @@ void PlayerWnd::setupUi()
     vlcWidgetVideo_->setObjectName("vlcWidgetVideo");
     vlcWidgetVideo_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-
     vlcWidgetSeek_ = new VlcWidgetSeek();
     vlcWidgetSeek_->setObjectName("vlcWidgetSeek");
     vlcWidgetSeek_->setFixedHeight(26);
@@ -123,6 +121,7 @@ void PlayerWnd::setupUi()
     cmbAspectRatio_->setObjectName("cmbAspectRatio");
     cmbAspectRatio_->setFixedSize(72, 20);
     cmbAspectRatio_->addItem("Default", Vlc::Ratio::Original);
+    cmbAspectRatio_->addItem("Stretch", Vlc::Ratio::KeepStretch);
     cmbAspectRatio_->addItem("16:10", Vlc::Ratio::R_16_10);
     cmbAspectRatio_->addItem("16:9", Vlc::Ratio::R_16_9);
     cmbAspectRatio_->addItem("1.85:1", Vlc::Ratio::R_185_100);
@@ -208,8 +207,9 @@ void PlayerWnd::setupUi()
     cmbPlaybackMode_->addItem("Playlist Once", Vlc::PlaybackMode::DefaultPlayback);
     cmbPlaybackMode_->addItem("Playlist Loop", Vlc::PlaybackMode::Loop);
     cmbPlaybackMode_->addItem("File Loop", Vlc::PlaybackMode::Repeat);
+    cmbPlaybackMode_->setCurrentIndex(0);
 
-    QHBoxLayout* hlPlaylistControl = new QHBoxLayout();
+    QHBoxLayout *hlPlaylistControl = new QHBoxLayout();
     hlPlaylistControl->setSpacing(5);
     hlPlaylistControl->addStretch();
     hlPlaylistControl->addWidget(pushButtonAdd_);
@@ -217,13 +217,13 @@ void PlayerWnd::setupUi()
     hlPlaylistControl->addWidget(pushButtonClear_);
     hlPlaylistControl->addWidget(cmbPlaybackMode_);
 
-    QVBoxLayout* vlRight = new QVBoxLayout();
+    QVBoxLayout *vlRight = new QVBoxLayout();
     vlRight->setSpacing(0);
     vlRight->setContentsMargins(0, 0, 0, 0);
     vlRight->addWidget(playlistWidget_);
     vlRight->addLayout(hlPlaylistControl);
 
-    QWidget* widgetRight = new QWidget();
+    QWidget *widgetRight = new QWidget();
     widgetRight->setLayout(vlRight);
 
     QSplitter *splitter = new QSplitter();
@@ -267,6 +267,8 @@ void PlayerWnd::onPuaseResumeButtonClicked()
 
 void PlayerWnd::onStopButtonClicked()
 {
+    vlcWidgetVideo_->setScale(Vlc::Scale::NoScale);
+
     if (vlcMediaListPlayer_->mediaPlayer()->state() != Vlc::State::Stopped) {
         vlcMediaListPlayer_->stop();
     }
@@ -292,16 +294,16 @@ void PlayerWnd::onAddButtonClicked()
 
 void PlayerWnd::onDeleteButtonClicked()
 {
-  if (vlcMediaList_ && playlistWidget_->currentRow() >= 0) {
-    vlcMediaList_->removeMedia(playlistWidget_->currentRow());
-  }
+    if (vlcMediaList_ && playlistWidget_->currentRow() >= 0) {
+        vlcMediaList_->removeMedia(playlistWidget_->currentRow());
+    }
 }
 
 void PlayerWnd::onClearButtonClicked()
 {
-  if (vlcMediaList_) {
-    vlcMediaList_->removeAllMedia();
-  }
+    if (vlcMediaList_) {
+        vlcMediaList_->removeAllMedia();
+    }
 }
 
 void PlayerWnd::onPlayRateSpinBoxValueChanged(double value)
@@ -328,7 +330,7 @@ void PlayerWnd::onAspectRatioCurrentIndexChanged(int index)
 void PlayerWnd::onCropRatioCurrentIndexChanged(int index)
 {
     if (vlcWidgetVideo_) {
-        vlcWidgetVideo_->setAspectRatio((Vlc::Ratio)cmbCropRatio_->itemData(index).toInt());
+        vlcWidgetVideo_->setCropRatio((Vlc::Ratio)cmbCropRatio_->itemData(index).toInt());
     }
 }
 
@@ -356,10 +358,10 @@ void PlayerWnd::onMediaListPlayerNextItemSet(VlcMedia *media)
         VlcMetaManager metaManager(media);
         QString title = metaManager.title();
         for (int i = 0; i < playlistWidget_->count(); i++) {
-          if (playlistWidget_->item(i)->text() == title) {
-            playlistWidget_->setCurrentRow(i);
-            break;
-          }
+            if (playlistWidget_->item(i)->text() == title) {
+                playlistWidget_->setCurrentRow(i);
+                break;
+            }
         }
     }
 }

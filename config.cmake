@@ -8,10 +8,10 @@ SET(QT_SDK_DIR "C:/Qt/Qt5.15.2-MSVC2017-x86-Shared")
 
 # The libvlc SDK path
 SET(LIBVLC_VERSION      0x030016)
-SET(LIBVLC_LIBRARY      "d:/sourcecode/Github/vlc-qt/vlc-3.0.16/sdk/lib/libvlc.lib")
-SET(LIBVLCCORE_LIBRARY  "d:/sourcecode/Github/vlc-qt/vlc-3.0.16/sdk/lib/libvlccore.lib")
-SET(LIBVLC_INCLUDE_DIR  "d:/sourcecode/Github/vlc-qt/vlc-3.0.16/sdk/include")
-SET(LIBVLC_BIN_DIR      "d:/sourcecode/Github/vlc-qt/vlc-3.0.16/sdk/bin")
+SET(LIBVLC_LIBRARY      "d:/sourcecode/ChangJi/Windows/lw-video-crypt/vlc-3.0.16/sdk/lib/libvlc.lib")
+SET(LIBVLCCORE_LIBRARY  "d:/sourcecode/ChangJi/Windows/lw-video-crypt/vlc-3.0.16/sdk/lib/libvlccore.lib")
+SET(LIBVLC_INCLUDE_DIR  "d:/sourcecode/ChangJi/Windows/lw-video-crypt/vlc-3.0.16/sdk/include")
+SET(LIBVLC_BIN_DIR      "d:/sourcecode/ChangJi/Windows/lw-video-crypt/vlc-3.0.16/sdk/bin")
 
 SET(LIBVLC_PLUGINS_DIR  "${LIBVLC_BIN_DIR}/plugins")
 SET(LIBVLC_LIB_DIR      "${LIBVLC_BIN_DIR}/lib")

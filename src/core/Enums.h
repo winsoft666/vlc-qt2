@@ -192,6 +192,7 @@ public:
     enum Ratio {
         Original,
         Ignore, /*!< QML aspect ratio only */
+        KeepStretch,
         R_16_9,
         R_16_10,
         R_185_100,
@@ -266,7 +267,7 @@ public:
 #endif
         DefaultVout
     };
-#if QT_VERSION >= 0x050000
+
     Q_ENUM(LogLevel)
     Q_ENUM(ActionsType)
     Q_ENUM(AudioChannel)
@@ -282,23 +283,7 @@ public:
     Q_ENUM(State)
     Q_ENUM(VideoCodec)
     Q_ENUM(VideoOutput)
-#else
-    Q_ENUMS(LogLevel)
-    Q_ENUMS(ActionsType)
-    Q_ENUMS(AudioChannel)
-    Q_ENUMS(AudioCodec)
-    Q_ENUMS(AudioOutput)
-    Q_ENUMS(Deinterlacing)
-    Q_ENUMS(FillMode)
-    Q_ENUMS(Meta)
-    Q_ENUMS(Mux)
-    Q_ENUMS(PlaybackMode)
-    Q_ENUMS(Ratio)
-    Q_ENUMS(Scale)
-    Q_ENUMS(State)
-    Q_ENUMS(VideoCodec)
-    Q_ENUMS(VideoOutput)
-#endif
+
     // Functions
     /*!
         \brief Log level strings

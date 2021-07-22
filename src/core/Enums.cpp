@@ -98,6 +98,7 @@ QStringList Vlc::ratio()
     QStringList list;
     list << ""
          << "ignore"
+         << "keep_stretch"
          << "16:9"
          << "16:10"
          << "185:100"
@@ -117,6 +118,7 @@ QStringList Vlc::ratioHuman()
     QStringList list;
     list << ""
          << ""
+         << "keep_stretch"
          << "16:9"
          << "16:10"
          << "1.85:1"
