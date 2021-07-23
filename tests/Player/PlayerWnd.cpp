@@ -1,6 +1,7 @@
 #include "PlayerWnd.h"
 #include <QStyle>
 #include "core/Audio.h"
+#include "core/Video.h"
 #include "core/Common.h"
 #include "core/Instance.h"
 #include "core/Media.h"
@@ -42,7 +43,6 @@ PlayerWnd::PlayerWnd(QWidget *parent) : QWidget(parent), vlcInstance_(nullptr), 
     connect(cmbAspectRatio_, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PlayerWnd::onAspectRatioCurrentIndexChanged);
     connect(cmbCropRatio_, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PlayerWnd::onCropRatioCurrentIndexChanged);
 
-    qunsetenv("VLC_PLUGIN_PATH");
 #ifndef Q_OS_DARWIN
     VlcCommon::setPluginPath(QString(LIBVLC_PLUGINS_DIR));
 #endif

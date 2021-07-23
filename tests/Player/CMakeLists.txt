@@ -33,8 +33,6 @@ if (OS_WINDOWS)
   source_group("Resource Files" FILES ${_RES_FILES})
 endif()
 
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${VLCQt_OUT_DIR}/${PROJECT_NAME})
-
 add_executable(${PROJECT_NAME} WIN32 
   ${_SRC_FILES}
   ${_UI_FILES}
