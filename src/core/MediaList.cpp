@@ -31,7 +31,7 @@ VlcMediaList::VlcMediaList(VlcInstance *instance)
 
     createCoreConnections();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 VlcMediaList::~VlcMediaList()
@@ -43,7 +43,7 @@ VlcMediaList::~VlcMediaList()
 
     libvlc_media_list_release(_vlcMediaList);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 libvlc_media_list_t *VlcMediaList::core()
@@ -84,7 +84,7 @@ void VlcMediaList::addMedia(VlcMedia *media)
     _list.append(media);
     unlock();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 VlcMedia *VlcMediaList::at(int index)
@@ -98,7 +98,7 @@ int VlcMediaList::count()
     int count = libvlc_media_list_count(_vlcMediaList);
     unlock();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return count;
 }
@@ -115,7 +115,7 @@ int VlcMediaList::indexOf(libvlc_media_t *media)
     index = libvlc_media_list_index_of_item(_vlcMediaList, media);
     unlock();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return index;
 }
@@ -128,7 +128,7 @@ void VlcMediaList::insertMedia(VlcMedia *media,
     _list.insert(index, media);
     unlock();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaList::removeMedia(int index)
@@ -139,7 +139,7 @@ void VlcMediaList::removeMedia(int index)
     _list.removeAt(index);
     unlock();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaList::removeAllMedia()

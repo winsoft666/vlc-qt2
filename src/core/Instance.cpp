@@ -52,18 +52,19 @@ void logCallback(void *data,
     QString message(result);
     free(result);
 
-    message.prepend("libvlc: ");
-
     switch (level) {
     case Vlc::ErrorLevel:
+        message.prepend("[libvlc] Error: ");
         qCritical(message.toUtf8().data(), NULL);
         break;
     case Vlc::WarningLevel:
+        message.prepend("[libvlc] Warning: ");
         qWarning(message.toUtf8().data(), NULL);
         break;
     case Vlc::NoticeLevel:
     case Vlc::DebugLevel:
     default:
+        message.prepend("[libvlc] Debug: ");
         qDebug(message.toUtf8().data(), NULL);
         break;
     }
@@ -93,8 +94,7 @@ VlcInstance::VlcInstance(const QStringList &args,
     qRegisterMetaType<Vlc::Meta>("Vlc::Meta");
     qRegisterMetaType<Vlc::State>("Vlc::State");
 
-    VlcError::showErrmsg();
-
+    VlcError::showDebugErrmsg();
     // Check if instance is running
     if (_vlcInstance) {
         libvlc_log_set(_vlcInstance, logCallback, this);

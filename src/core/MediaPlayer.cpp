@@ -37,7 +37,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
     libvlc_video_set_key_input(_vlcMediaPlayer, false);
     libvlc_video_set_mouse_input(_vlcMediaPlayer, false);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     _vlcAudio = new VlcAudio(this);
     _vlcVideo = new VlcVideo(this);
@@ -48,7 +48,7 @@ VlcMediaPlayer::VlcMediaPlayer(VlcInstance *instance)
 
     createCoreConnections();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 VlcMediaPlayer::~VlcMediaPlayer()
@@ -61,7 +61,7 @@ VlcMediaPlayer::~VlcMediaPlayer()
 
     libvlc_media_player_release(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 libvlc_media_player_t *VlcMediaPlayer::core() const
@@ -154,7 +154,7 @@ int VlcMediaPlayer::length() const
 {
     libvlc_time_t length = libvlc_media_player_get_length(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return length;
 }
@@ -168,7 +168,7 @@ libvlc_media_t *VlcMediaPlayer::currentMediaCore()
 {
     libvlc_media_t *media = libvlc_media_player_get_media(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return media;
 }
@@ -178,7 +178,7 @@ void VlcMediaPlayer::open(VlcMedia *media)
     _media = media;
     libvlc_media_player_set_media(_vlcMediaPlayer, media->core());
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     play();
 }
@@ -188,7 +188,7 @@ void VlcMediaPlayer::openOnly(VlcMedia *media)
     _media = media;
     libvlc_media_player_set_media(_vlcMediaPlayer, media->core());
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaPlayer::play()
@@ -198,7 +198,7 @@ void VlcMediaPlayer::play()
 
     libvlc_media_player_play(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaPlayer::pause()
@@ -209,7 +209,7 @@ void VlcMediaPlayer::pause()
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_set_pause(_vlcMediaPlayer, true);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaPlayer::togglePause()
@@ -220,7 +220,7 @@ void VlcMediaPlayer::togglePause()
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_pause(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaPlayer::resume()
@@ -231,7 +231,7 @@ void VlcMediaPlayer::resume()
     if (libvlc_media_player_can_pause(_vlcMediaPlayer))
         libvlc_media_player_set_pause(_vlcMediaPlayer, false);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaPlayer::setTime(int time)
@@ -246,7 +246,7 @@ void VlcMediaPlayer::setTime(int time)
     if (state() == Vlc::Paused)
         emit timeChanged(time);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaPlayer::setVideoWidget(VlcVideoDelegate *widget)
@@ -278,7 +278,7 @@ bool VlcMediaPlayer::seekable() const
 
     bool seekable = libvlc_media_player_is_seekable(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return seekable;
 }
@@ -293,7 +293,7 @@ Vlc::State VlcMediaPlayer::state() const
     libvlc_state_t state;
     state = libvlc_media_player_get_state(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return Vlc::State(state);
 }
@@ -309,14 +309,14 @@ void VlcMediaPlayer::stop()
 
     libvlc_media_player_stop(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 int VlcMediaPlayer::time() const
 {
     libvlc_time_t time = libvlc_media_player_get_time(_vlcMediaPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return time;
 }
@@ -437,14 +437,14 @@ void VlcMediaPlayer::setPosition(float pos)
 {
     libvlc_media_player_set_position(_vlcMediaPlayer, pos);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaPlayer::setPlaybackRate(float rate)
 {
     libvlc_media_player_set_rate(_vlcMediaPlayer, rate);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 float VlcMediaPlayer::playbackRate()

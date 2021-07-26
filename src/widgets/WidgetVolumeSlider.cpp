@@ -152,9 +152,9 @@ void VlcWidgetVolumeSlider::updateVolume()
         return;
 
     if (_vlcMediaPlayer->state() == Vlc::Buffering
-        || _vlcMediaPlayer->state() == Vlc::Playing
-        || _vlcMediaPlayer->state() == Vlc::Paused)
-        _vlcAudio->setVolume(_currentVolume);
+      || _vlcMediaPlayer->state() == Vlc::Playing
+      || _vlcMediaPlayer->state() == Vlc::Paused)
+      _vlcAudio->setVolume(_currentVolume);
 }
 
 int VlcWidgetVolumeSlider::volume() const
@@ -165,7 +165,7 @@ int VlcWidgetVolumeSlider::volume() const
 void VlcWidgetVolumeSlider::volumeControl(bool up)
 {
     if (up) {
-        if (_currentVolume != 200) {
+        if (_currentVolume != 100) {
             setVolume(_currentVolume + 1);
         }
     } else {

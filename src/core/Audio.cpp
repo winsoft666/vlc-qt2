@@ -92,36 +92,40 @@ bool VlcAudio::getMute() const
     bool mute = false;
     if (_vlcMediaPlayer) {
         mute = libvlc_audio_get_mute(_vlcMediaPlayer);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
     }
 
     return mute;
 }
 
-void VlcAudio::setVolume(int volume)
+bool VlcAudio::setVolume(int volume)
 {
-    if (_vlcMediaPlayer) {
-        // Don't change if volume is the same
-        if (volume != VlcAudio::volume()) {
-            libvlc_audio_set_volume(_vlcMediaPlayer, volume);
-            VlcError::showErrmsg();
-        }
-    }
+    if (!_vlcMediaPlayer)
+        return false;
+
+    // Don't change if volume is the same
+    if (volume == VlcAudio::volume())
+        return true;
+
+    bool ret = (0 == libvlc_audio_set_volume(_vlcMediaPlayer, volume));
+    VlcError::showDebugErrmsg();
+    return ret;
 }
 
-void VlcAudio::setTrack(int track)
+bool VlcAudio::setTrack(int track)
 {
-    if (_vlcMediaPlayer) {
-        libvlc_audio_set_track(_vlcMediaPlayer, track);
-        VlcError::showErrmsg();
-    }
+    if (!_vlcMediaPlayer)
+        return false;
+    bool ret = (0 == libvlc_audio_set_track(_vlcMediaPlayer, track));
+    VlcError::showDebugErrmsg();
+    return ret;
 }
 
 bool VlcAudio::toggleMute() const
 {
     if (_vlcMediaPlayer) {
         libvlc_audio_toggle_mute(_vlcMediaPlayer);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
     }
 
     return getMute();
@@ -131,7 +135,7 @@ void VlcAudio::setMute(bool mute) const
 {
     if (_vlcMediaPlayer && mute != getMute()) {
         libvlc_audio_set_mute(_vlcMediaPlayer, mute);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
     }
 }
 
@@ -140,7 +144,7 @@ int VlcAudio::track() const
     int track = -1;
     if (_vlcMediaPlayer) {
         track = libvlc_audio_get_track(_vlcMediaPlayer);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
     }
 
     return track;
@@ -151,7 +155,7 @@ int VlcAudio::trackCount() const
     int count = -1;
     if (_vlcMediaPlayer) {
         count = libvlc_audio_get_track_count(_vlcMediaPlayer);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
     }
 
     return count;
@@ -164,7 +168,7 @@ QStringList VlcAudio::trackDescription() const
     if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc;
         desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
 
         descriptions << QString().fromUtf8(desc->psz_name);
         if (trackCount() > 1) {
@@ -185,7 +189,7 @@ QList<int> VlcAudio::trackIds() const
     if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc;
         desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
 
         ids << desc->i_id;
         if (trackCount() > 1) {
@@ -206,7 +210,7 @@ QMap<int, QString> VlcAudio::tracks() const
     if (_vlcMediaPlayer) {
         libvlc_track_description_t *desc, *first;
         first = desc = libvlc_audio_get_track_description(_vlcMediaPlayer);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
 
         if (desc != NULL) {
             tracks.insert(desc->i_id, QString().fromUtf8(desc->psz_name));
@@ -228,7 +232,7 @@ int VlcAudio::volume() const
     int volume = -1;
     if (_vlcMediaPlayer) {
         volume = libvlc_audio_get_volume(_vlcMediaPlayer);
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
     }
 
     return volume;
@@ -239,7 +243,7 @@ Vlc::AudioChannel VlcAudio::channel() const
     Vlc::AudioChannel channel = Vlc::AudioChannelError;
     if (_vlcMediaPlayer) {
         channel = Vlc::AudioChannel(libvlc_audio_get_channel(_vlcMediaPlayer));
-        VlcError::showErrmsg();
+        VlcError::showDebugErrmsg();
     }
 
     return channel;
@@ -251,7 +255,7 @@ void VlcAudio::setChannel(Vlc::AudioChannel channel)
         // Don't change if channel is the same
         if (channel != VlcAudio::channel()) {
             libvlc_audio_set_channel(_vlcMediaPlayer, channel);
-            VlcError::showErrmsg();
+            VlcError::showDebugErrmsg();
         }
     }
 }

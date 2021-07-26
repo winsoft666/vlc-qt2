@@ -94,7 +94,7 @@ void VlcEqualizer::loadFromPreset(uint index)
         libvlc_audio_equalizer_release(_vlcEqualizer);
     }
     _vlcEqualizer = libvlc_audio_equalizer_new_from_preset(index);
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
     if (_vlcEqualizer) {
         emit presetLoaded();
     }
@@ -107,7 +107,7 @@ void VlcEqualizer::setAmplificationForBandAt(float amp, uint bandIndex)
     }
     libvlc_audio_equalizer_set_amp_at_index(_vlcEqualizer, amp, bandIndex);
     libvlc_media_player_set_equalizer(_vlcMediaPlayer->core(), _vlcEqualizer);
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcEqualizer::setEnabled(bool enabled)
@@ -126,5 +126,5 @@ void VlcEqualizer::setPreamplification(float value)
     }
     libvlc_audio_equalizer_set_preamp(_vlcEqualizer, value);
     libvlc_media_player_set_equalizer(_vlcMediaPlayer->core(), _vlcEqualizer);
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }

@@ -21,24 +21,30 @@
 
 #include "core/Error.h"
 
-QString VlcError::errmsg()
+QString VlcError::errmsg(bool clearMsg)
 {
     QString error;
     if (libvlc_errmsg()) {
         error = QString::fromUtf8(libvlc_errmsg());
-        libvlc_clearerr();
+        if (clearMsg)
+            libvlc_clearerr();
     }
 
     return error;
 }
 
-void VlcError::showErrmsg()
+void VlcError::clearErr()
 {
-    // Outputs libvlc error message if there is any
-    QString error = errmsg();
-    if (!error.isEmpty()) {
-        qWarning().noquote() << "libvlc Error:" << error;
-    }
+    libvlc_clearerr();
 }
 
-void VlcError::clearerr() {}
+void VlcError::showDebugErrmsg()
+{
+#if (defined DEBUG || defined _DEBUG)
+    // Outputs libvlc error message if there is any
+    QString error = errmsg(false);
+    if (!error.isEmpty()) {
+        qDebug().noquote() << "libvlc last err:" << error;
+    }
+#endif
+}

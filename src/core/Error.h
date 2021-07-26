@@ -33,29 +33,26 @@ class VLCQT_CORE_EXPORT VlcError
 public:
     /*!
         \brief A human-readable error message for the last libvlc error in the calling thread.
+        \param clearMsg whether clear error message or not (bool)
 
         The resulting string is valid until another error occurs.
         \return error message (QString)
         \warning There may be no output, if there is no error.
     */
-    static QString errmsg();
-
-    /*!
-        \brief A human-readable error message displayed into standard output for the last libvlc error in the calling thread.
-
-		The resulting string is valid until another error occurs.
-		\warning There may be no output, if there is no error.
-	*/
-    static void showErrmsg();
+    static QString errmsg(bool clearMsg);
 
     /*!
 		\brief Clears the libvlc error status for the current thread.
-
-        This does nothing.
-
-        \deprecated Deprecated since VLC-Qt 1.1, will be removed in 2.0
 	*/
-    Q_DECL_DEPRECATED static void clearerr();
+    static void clearErr();
+
+    /*!
+    \brief A human-readable error message displayed into standard output for the last libvlc error in the calling thread.
+
+    The resulting string is valid until another error occurs.
+    \warning Only valid in DEBUG mode! There may be no output, if there is no error.
+    */
+    static void showDebugErrmsg();
 };
 
 #endif // VLCQT_ERROR_H_

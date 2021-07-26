@@ -48,8 +48,11 @@ PlayerWnd::PlayerWnd(QWidget *parent) : QWidget(parent), vlcInstance_(nullptr), 
 #endif
 
     vlcInstance_ = new VlcInstance(VlcCommon::args(), this);
+#if (defined DEBUG || defined _DEBUG)
     vlcInstance_->setLogLevel(Vlc::DebugLevel);
-
+#else
+    vlcInstance_->setLogLevel(Vlc::WarningLevel);
+#endif
     vlcMediaList_ = new VlcMediaList(vlcInstance_);
 
     vlcMediaPlayer_ = new VlcMediaPlayer(vlcInstance_);

@@ -41,7 +41,7 @@ VlcMediaListPlayer::VlcMediaListPlayer(VlcInstance *instance)
 
     createCoreConnections();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 VlcMediaListPlayer::VlcMediaListPlayer(VlcMediaPlayer *player,
@@ -59,7 +59,7 @@ VlcMediaListPlayer::VlcMediaListPlayer(VlcMediaPlayer *player,
 
     createCoreConnections();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 VlcMediaListPlayer::~VlcMediaListPlayer()
@@ -68,7 +68,7 @@ VlcMediaListPlayer::~VlcMediaListPlayer()
 
     libvlc_media_list_player_release(_vlcMediaListPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 libvlc_media_list_player_t *VlcMediaListPlayer::core()
@@ -114,21 +114,21 @@ void VlcMediaListPlayer::itemAt(int index)
 {
     libvlc_media_list_player_play_item_at_index(_vlcMediaListPlayer, index);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaListPlayer::next()
 {
     libvlc_media_list_player_next(_vlcMediaListPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaListPlayer::play()
 {
     libvlc_media_list_player_play(_vlcMediaListPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 Vlc::PlaybackMode VlcMediaListPlayer::playbackMode() const
@@ -140,14 +140,14 @@ void VlcMediaListPlayer::previous()
 {
     libvlc_media_list_player_previous(_vlcMediaListPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaListPlayer::stop()
 {
     libvlc_media_list_player_stop(_vlcMediaListPlayer);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaListPlayer::setMediaList(VlcMediaList *list)
@@ -155,7 +155,7 @@ void VlcMediaListPlayer::setMediaList(VlcMediaList *list)
     _list = list;
     libvlc_media_list_player_set_media_list(_vlcMediaListPlayer, list->core());
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMediaListPlayer::setPlaybackMode(const Vlc::PlaybackMode &mode)

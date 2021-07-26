@@ -68,14 +68,16 @@ public slots:
     /*!
         \brief Set current audio level.
         \param volume new audio level (int)
+        \return the result of set volume (bool)
     */
-    void setVolume(int volume);
+    bool setVolume(int volume);
 
     /*!
         \brief Set current audio track.
         \param track new audio track (int)
+        \return the result of set track (bool)
     */
-    void setTrack(int track);
+    bool setTrack(int track);
 
     /*!
         \brief Toggle mute state.

@@ -50,7 +50,7 @@ VlcMedia::VlcMedia(libvlc_media_t *media) : QObject(nullptr), _vlcMedia(nullptr)
     if (mrl)
         _currentMRL = QString::fromUtf8(mrl);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 VlcMedia::~VlcMedia()
@@ -59,7 +59,7 @@ VlcMedia::~VlcMedia()
 
     libvlc_media_release(_vlcMedia);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 libvlc_media_t *VlcMedia::core()
@@ -90,7 +90,7 @@ void VlcMedia::initMedia(const QString &location,
 
     createCoreConnections();
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMedia::createCoreConnections()
@@ -131,7 +131,7 @@ bool VlcMedia::parsed() const
 {
     int parsed = libvlc_media_is_parsed(_vlcMedia);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return parsed;
 }
@@ -140,7 +140,7 @@ void VlcMedia::parse()
 {
     libvlc_media_parse_async(_vlcMedia);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 QString VlcMedia::currentLocation() const
@@ -184,7 +184,7 @@ Vlc::State VlcMedia::state() const
     libvlc_state_t state;
     state = libvlc_media_get_state(_vlcMedia);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return Vlc::State(state);
 }
@@ -193,7 +193,7 @@ qint64 VlcMedia::duration() const
 {
     libvlc_time_t duration = libvlc_media_get_duration(_vlcMedia);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return duration;
 }
@@ -243,7 +243,7 @@ QString VlcMedia::merge(const QString &name,
     setOption(option1);
     setOption(option2);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return l + "." + Vlc::mux()[mux];
 }
@@ -271,7 +271,7 @@ QString VlcMedia::record(const QString &name,
     setOption(option1);
     setOption(option2);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return l + "." + Vlc::mux()[mux];
 }
@@ -301,7 +301,7 @@ QString VlcMedia::record(const QString &name,
     setOption(option1);
     setOption(option2);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return l + "." + Vlc::mux()[mux];
 }
@@ -334,7 +334,7 @@ QString VlcMedia::record(const QString &name,
     setOption(option1);
     setOption(option2);
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 
     return l + "." + Vlc::mux()[mux];
 }
@@ -349,7 +349,7 @@ void VlcMedia::setOption(const QString &option)
 {
     libvlc_media_add_option(_vlcMedia, option.toUtf8().data());
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMedia::setOptions(const QStringList &options)
@@ -358,7 +358,7 @@ void VlcMedia::setOptions(const QStringList &options)
         libvlc_media_add_option(_vlcMedia, option.toUtf8().data());
     }
 
-    VlcError::showErrmsg();
+    VlcError::showDebugErrmsg();
 }
 
 void VlcMedia::libvlc_callback(const libvlc_event_t *event,

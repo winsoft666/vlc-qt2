@@ -82,20 +82,20 @@ public slots:
 
     /*!
         \brief Set volume for current media
-        \param volume number from 0 to 200
+        \param volume number from 0 to 100
     */
     void setVolume(int volume);
 
     /*!
         \brief Get volume for current media
-        \return volume number from 0 to 200
+        \return volume number from 0 to 100
     */
     int volume() const;
 
     /*!
         \brief Decreases or increases volume for 1, depending on the parameter.
 
-        Limits from 0 to 200 apply to this function.
+        Limits from 0 to 100 apply to this function.
 
         \param up if true increases the volume
     */
