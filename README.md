@@ -19,7 +19,7 @@ All development is made in branches. You can also find specific releases by brow
 ## Examples
 `Player` is a perfect example about how to use VLC-Qt in `tests` folder.
 
-![screenshot on windows](screenshots/screenshot-1.png)
+![screenshot on windows](screenshots/screenshot-1.jpg)
 
 
 ## Building and requirements
