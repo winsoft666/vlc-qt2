@@ -6,12 +6,10 @@ Build files are generated using [CMake](http://www.cmake.org) (3.0.2 or later).
 
 
 ## CMake configuration
-Update the [config.cmake](config.cmake) to set the required build configurations.
+First of all, you need update the [config.cmake](config.cmake) to set the required build configurations.
 
  * `QT_SDK_DIR`: Qt sdk directory.
- * `LIBVLC_VERSION`: set VLC version you are compiling with to disable unsupported
- 	features, should be defined as base 16 integer like `0x020200`, defaults to
- 	latest stable VLC version
+ * `LIBVLC_VERSION`: set VLC version you are compiling with to disable unsupported features, should be defined as base 16 integer like `0x020200`, defaults to latest stable VLC version
  * `LIBVLC_LIBRARY`: the path of libvlc.lib
  * `LIBVLCCORE_LIBRARY`: the path of libvlccore.lib
  * `LIBVLC_INCLUDE_DIR`: the directory of libvlc-sdk header files
