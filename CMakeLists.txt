@@ -16,7 +16,7 @@
 # along with this library. If not, see <http://www.gnu.org/licenses/>.
 #############################################################################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.4.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.16)
 
 SET(CMAKE_MODULE_PATH
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake

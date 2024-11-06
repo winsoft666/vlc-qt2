@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.16)
 project(Player)
 
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "Generated Files")

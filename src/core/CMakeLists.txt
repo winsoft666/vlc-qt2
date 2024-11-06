@@ -29,6 +29,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Add definition for exporting symbols
 ADD_DEFINITIONS(-DVLCQT_CORE_LIBRARY -DUNICODE -D_UNICODE)
 
+IF(WIN32)
+    ADD_DEFINITIONS(-DWIN32 -D_WIN32)
+ENDIF()
+
 # Add definitions for shared or static library
 IF(STATIC)
     ADD_DEFINITIONS(-DQT_STATIC -D_REENTRANT)
